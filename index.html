@@ -14,7 +14,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -25,15 +25,12 @@
         h1 {
             color: white;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .game-container {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         }
 
         .tabuleiro {
@@ -44,7 +41,52 @@
             background-color: #8B4513;
             padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .posicao {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #654321;
+            cursor: pointer;
+        }
+
+        .posicao.valida {
+            background: #D2B48C;
+        }
+
+        .posicao.invalida {
+            background: transparent;
+            border: none;
+            cursor: default;
+        }
+
+        .posicao.com-peca {
+            background: #FFD700;
+        }
+
+        .posicao.selecionada {
+            border: 3px solid #FF4500;
+        }
+
+        .posicao.movimento-possivel {
+            border: 3px solid #32CD32;
+        }
+
+        .info-panel {
+            margin-top: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .pecas-restantes {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .status-jogo {
+            font-size: 16px;
+            font-weight: bold;
         }
     </style>
 </head>
