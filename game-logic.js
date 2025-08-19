@@ -49,4 +49,47 @@ export function contarPecas() {
     return contador;
 }
 
+export function selecionarPosicao(linha, coluna) {
+    if (!temPeca(linha, coluna)) {
+        return false;
+    }
+    
+    posicaoSelecionada = { linha, coluna };
+    return true;
+}
+
+export function desselecionarPosicao() {
+    posicaoSelecionada = null;
+}
+
+export function movimentoValido(linhaDestino, colunaDestino) {
+    if (!posicaoSelecionada) return false;
+    if (!posicaoVazia(linhaDestino, colunaDestino)) return false;
+    
+    const { linha: linhaOrigem, coluna: colunaOrigem } = posicaoSelecionada;
+    
+    const deltaLinha = linhaDestino - linhaOrigem;
+    const deltaColuna = colunaDestino - colunaOrigem;
+    
+    const movimentoHorizontal = deltaLinha === 0 && Math.abs(deltaColuna) === 2;
+    const movimentoVertical = deltaColuna === 0 && Math.abs(deltaLinha) === 2;
+    
+    if (!movimentoHorizontal && !movimentoVertical) return false;
+    
+    const linhaMeio = linhaOrigem + deltaLinha / 2;
+    const colunaMeio = colunaOrigem + deltaColuna / 2;
+    
+    return temPeca(linhaMeio, colunaMeio);
+}
+
+
+
+export function jogoVencido() {
+    return contarPecas() === 1;
+}
+
+export function jogoTerminado() {
+    return jogoVencido() || !temMovimentosPossiveis();
+}
+
 inicializarJogo();
