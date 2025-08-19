@@ -82,7 +82,49 @@ export function movimentoValido(linhaDestino, colunaDestino) {
     return temPeca(linhaMeio, colunaMeio);
 }
 
+export function executarMovimento(linhaDestino, colunaDestino) {
+    if (!movimentoValido(linhaDestino, colunaDestino)) {
+        return false;
+    }
+    
+    const { linha: linhaOrigem, coluna: colunaOrigem } = posicaoSelecionada;
+    const deltaLinha = linhaDestino - linhaOrigem;
+    const deltaColuna = colunaDestino - colunaOrigem;
+    const linhaMeio = linhaOrigem + deltaLinha / 2;
+    const colunaMeio = colunaOrigem + deltaColuna / 2;
+    
+    tabuleiro[linhaOrigem][colunaOrigem] = 1;
+    tabuleiro[linhaMeio][colunaMeio] = 1;
+    tabuleiro[linhaDestino][colunaDestino] = 2;
+    
+    posicaoSelecionada = null;
+    return true;
+}
 
+export function temMovimentosPossiveis() {
+    for (let i = 0; i < 7; i++) {
+        for (let j = 0; j < 7; j++) {
+            if (temPeca(i, j)) {
+                const movimentos = [
+                    [i - 2, j],
+                    [i + 2, j],
+                    [i, j - 2],
+                    [i, j + 2]
+                ];
+                
+                for (const [linha, coluna] of movimentos) {
+                    posicaoSelecionada = { linha: i, coluna: j };
+                    if (movimentoValido(linha, coluna)) {
+                        posicaoSelecionada = null;
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    posicaoSelecionada = null;
+    return false;
+}
 
 export function jogoVencido() {
     return contarPecas() === 1;
